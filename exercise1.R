@@ -52,3 +52,17 @@ Eland <- EPILand[!is.na(EPILand)]
 Eland
 hist(Eland) 
 hist(Eland, seq(30., 95., 1.0), prob=TRUE) 
+
+summary(Eland)
+fivenum(Eland,na.rm=TRUE) 
+stem(Eland)
+lines(density(Eland,na.rm=TRUE,bw=1.)) 
+rug(Eland) 
+
+plot(ecdf(Eland), do.points=FALSE, verticals=TRUE) 
+par(pty="s") 
+qqnorm(Eland)
+qqline(Eland) 
+qqplot(qt(ppoints(250), df= 5), x, xlab= "Q-Q plot for t dsn") 
+qqline(x) 
+boxplot(Eland,DALY) 
