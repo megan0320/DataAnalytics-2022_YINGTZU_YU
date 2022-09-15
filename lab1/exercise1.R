@@ -120,6 +120,39 @@ hist(ELand,seq(30.,95.,1.0),prob=T)
 lines(density(ELand,na.rm = T,bw=1))
 rug(ELand)
 
+No_surface_water
+EPINoSurfWater <-EPI[!No_surface_water]
+ENoSurfWater <- EPINoSurfWater[!is.na(EPINoSurfWater)]
+ENoSurfWater
+fivenum(ENoSurfWater)
+stem(ENoSurfWater)
+hist(ENoSurfWater)
+hist(ENoSurfWater,seq(30.,95.,1.0),prob=T)
+lines(density(ENoSurfWater,na.rm = T,bw=1))
+rug(ENoSurfWater)
+
+Desert
+EPIDesert <-EPI[!Desert]
+EDesert <- EPIDesert[!is.na(EPIDesert)]
+EDesert
+fivenum(EDesert)
+stem(EDesert)
+hist(EDesert)
+hist(EDesert,seq(30.,95.,1.0),prob=T)
+lines(density(EDesert,na.rm = T,bw=1))
+rug(EDesert)
+
+High_Population_Density
+EPIHighPopDensity <-EPI[!High_Population_Density]
+EHighPopDensity <- EPIHighPopDensity[!is.na(EPIHighPopDensity)]
+EHighPopDensity
+fivenum(EHighPopDensity)
+stem(EHighPopDensity)
+hist(EHighPopDensity)
+hist(EHighPopDensity,seq(30.,95.,1.0),prob=T)
+lines(density(EHighPopDensity,na.rm = T,bw=1))
+rug(EHighPopDensity)
+
 #Exercise 2 filtering by geo_subregion
 GEO_subregion
 EPI[GEO_subregion=="South America"]
