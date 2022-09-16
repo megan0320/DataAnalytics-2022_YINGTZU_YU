@@ -1,16 +1,22 @@
-EPI_data <- read.csv(file.choose(),header = T)#import 2010_EPI_data
+EPI_data <- read.csv("2010EPI_data.csv", header = TRUE)
 EPI_data
-names(EPI_data)
+fix(EPI_data)
 attach(EPI_data)
 
-#remove Null value
+names(EPI_data) = EPI_data[1,]
+EPI_data = EPI_data[-1,]
+EPI_data[] <- lapply(EPI_data, function(x) type.convert(as.character(x)))
+View(EPI_data)
+EPI <- EPI_data$EPI
 tf <- is.na(EPI)
 E <- EPI[!tf]
 E
 
+
 #exercise1 for EPI
 summary(EPI)
 fivenum(EPI)
+
 fivenum(EPI,na.rm = T)
 stem(EPI)
 hist(EPI)
@@ -37,6 +43,7 @@ stem(ECOSYSTEM)
 hist(ECOSYSTEM)
 hist(ECOSYSTEM,seq(30.,95.,1.0),prob=T)
 lines(density(ECOSYSTEM,na.rm = T,bw=1))
+
 rug(ECOSYSTEM)
 boxplot(EPI, ECOSYSTEM)
 qqplot(EPI, ECOSYSTEM)
@@ -105,7 +112,6 @@ hist(BIODIVERSITY,seq(30.,95.,1.0),prob=T)
 lines(density(BIODIVERSITY,na.rm = T,bw=1))
 rug(BIODIVERSITY)
 boxplot(EPI, BIODIVERSITY)
-
 qqplot(EPI, BIODIVERSITY)
 
 #exercise2 for EPI
@@ -158,3 +164,4 @@ GEO_subregion
 EPI[GEO_subregion=="South America"]
 EPI[GEO_subregion=="Central Asia"]
 EPI[GEO_subregion=="Western Europe"]
+
