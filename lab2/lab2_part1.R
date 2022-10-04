@@ -131,19 +131,40 @@ qqplot(EPI_data$ENVHEALTH,EPI_data$ECOSYSTEM)
 # Using the EPI (under /EPI on web) dataset find the single most important factor in increasing the EPI in a given region
 GEO_subregion <- EPI_data$GEO_subregion
 names(EPI_data)
-res <- cor(E)
-res
-round(E, 2)
-round(cor(E),digits = 2)
 
-# improved correlation matrix
-# Load data
-data("EPI")
+max_relation_index <-17
+max_relation_value <-0
 
-cor(EPI[GEO_subregion=="Central Asia"],Nm[GEO_subregion=="Central Asia"])
-cor(EPI[GEO_subregion=="Central Asia"],A[GEO_subregion=="Central Asia"])
-cor(EPI[GEO_subregion=="Central Asia"],S[GEO_subregion=="Central Asia"])
-cor(EPI[GEO_subregion=="Central Asia"],S[GEO_subregion=="Central Asia"])
+EPI_factor <- EPI_data[,14][!is.na(EPI_data[,14])]
+EPI_data[,17][!is.na(EPI_data[,17])][GEO_subregion=="Central Asia"]
+for (x in 17:23) {
+  print(x)
+
+  factor <- EPI_data[,x][!is.na(EPI_data[,x])]
+  relation_value <- cor(EPI_factor[GEO_subregion=="Central Asia"],EPI_data[,x][!is.na(EPI_data[,x])][GEO_subregion=="Central Asia"])
+  
+  if (relation_value > max_relation_value) {
+    max_relation_value <- relation_value
+    max_relation_index <- x
+  }
+}
+for (x in 25:26) {
+  print(x)
+  factor <- as.numeric(EPI_data[,x][!is.na(EPI_data[,x])])
+  
+  factor
+  class(factor)
+  relation_value <- cor(EPI_factor[GEO_subregion=="Central Asia"],factor[GEO_subregion=="Central Asia"])
+  
+
+  if (relation_value > max_relation_value) {
+    max_relation_value <- relation_value
+    max_relation_index <- x
+  }
+}
+max_relation_index
+max_relation_value
+colnames(EPI_data)[max_relation_index]
 
 
 #lmENVH<-lm(ENVHEALTH~DALY+AIR_H+WATER_H
