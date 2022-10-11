@@ -1,10 +1,40 @@
-days <- c('Mon','Tue','Wed','Thu','Fri')
-temp <- c(60,61,64,68,70)
-snow <- c(TRUE,FALSE,TRUE,FALSE,FALSE)
-help("data.frame")
-RPI_WEEK_WEATHER <- data.frame(days,temp,snow)
-RPI_WEEK_WEATHER
+library(gdata) 
+install.packages("xlsx")
+library(xlsx)
+library("xlsx", lib.loc="C:\\Users\\megan\\AppData\\Local\\Temp\\RtmpuIPNiw\\downloaded_packages")
+bronx1<-read.xlsx("C:\\Users\\megan\\OneDrive\\Desktop\\textbook\\DataAnalytics\\lab\\lab3\\rollingsales_bronx.xls",pattern="BOROUGH",stringsAsFactors=FALSE,sheetIndex=1,startRow=5,header=TRUE)
+View(bronx1)
 
-summary(RPI_WEEK_WEATHER)
-str(RPI_WEEK_WEATHER)
-summary(RPI_WEEK_WEATHER)
+attach(bronx1) # If you choose to attach, leave out the "data=." in lm regression
+SALE.PRICE<-sub("\\$","",SALE.PRICE) 
+SALE.PRICE<-as.numeric(gsub(",","", SALE.PRICE)) 
+GROSS.SQUARE.FEET<-as.numeric(gsub(",","", GROSS.SQUARE.FEET)) 
+LAND.SQUARE.FEET<-as.numeric(gsub(",","", LAND.SQUARE.FEET)) 
+
+plot(log(GROSS.SQUARE.FEET), log(SALE.PRICE)) 
+m1<-lm(log(SALE.PRICE)~log(GROSS.SQUARE.FEET))
+summary(m1)
+abline(m1,col="red",lwd=2)
+plot(resid(m1))
+
+# Model 2
+
+m2<-lm(log(bronx1$SALE.PRICE)~log(bronx1$GROSS.SQUARE.FEET)+log(bronx1$LAND.SQUARE.FEET)+factor(bronx1$NEIGHBORHOOD))
+summary(m2)
+plot(resid(m2))
+
+# Suppress intercept - using "0+ ..."
+m2a<-lm(log(bronx1$SALE.PRICE)~0+log(bronx1$GROSS.SQUARE.FEET)+log(bronx1$LAND.SQUARE.FEET)+factor(bronx1$NEIGHBORHOOD))
+summary(m2a)
+plot(resid(m2a))
+
+# Model 3
+m3<-lm(log(bronx1$SALE.PRICE)~0+log(bronx1$GROSS.SQUARE.FEET)+log(bronx1$LAND.SQUARE.FEET)+factor(bronx1$NEIGHBORHOOD)+factor(bronx1$BUILDING.CLASS.CATEGORY))
+summary(m3)
+plot(resid(m3))
+
+# Model 4
+m4<-lm(log(bronx1$SALE.PRICE)~0+log(bronx1$GROSS.SQUARE.FEET)+log(bronx1$LAND.SQUARE.FEET)+factor(bronx1$NEIGHBORHOOD)*factor(bronx1$BUILDING.CLASS.CATEGORY))
+summary(m4)
+plot(resid(m4))
+#
